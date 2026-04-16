@@ -40,7 +40,7 @@ jobs:
           
           # 转换 domain-reject-rules.yaml (behavior: classical)
           if [ -f "domain-reject-rules.yaml" ]; then
-            mihomo convert-ruleset classical yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
+            mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
           fi
 
       - name: Publish to release branch
