@@ -1,2 +1,6 @@
 payload:
   - DOMAIN-SUFFIX,volceapplog.com
+  - DOMAIN-KEYWORD,maplocatesdksnapshot
+  - DOMAIN-KEYWORD,al-log
+  - DOMAIN-KEYWORD,logger
+  - DOMAIN-KEYWORD,debug
