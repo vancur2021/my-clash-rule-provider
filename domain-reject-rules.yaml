@@ -4,3 +4,5 @@ payload:
   - DOMAIN-KEYWORD,al-log
   - DOMAIN-KEYWORD,logger
   - DOMAIN-KEYWORD,debug
+  - DOMAIN-KEYWORD,metrics-picture.d
+  
