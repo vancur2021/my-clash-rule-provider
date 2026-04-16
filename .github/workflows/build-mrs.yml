@@ -36,12 +36,12 @@ jobs:
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
           fi
           
-          # 转换 domain-direct-rules.yaml (behavior: classical)
+          # 转换 domain-direct-rules.yaml (behavior: domain)
           if [ -f "domain-direct-rules.yaml" ]; then
-            mihomo convert-ruleset classical yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
+            mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
           fi
           
-          # 转换 domain-reject-rules.yaml (behavior: classical)
+          # 转换 domain-reject-rules.yaml (behavior: domain)
           if [ -f "domain-reject-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
           fi
