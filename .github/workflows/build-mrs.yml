@@ -30,17 +30,17 @@ jobs:
           
           # 转换 ip-direct-rules.yaml (behavior: ipcidr)
           if [ -f "ip-direct-rules.yaml" ]; then
-            mihomo convert-ruleset ipcidr ip-direct-rules.yaml publish/ip-direct-rules.mrs
+            mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
           fi
           
           # 转换 domain-direct-rules.yaml (behavior: classical)
           if [ -f "domain-direct-rules.yaml" ]; then
-            mihomo convert-ruleset classical domain-direct-rules.yaml publish/domain-direct-rules.mrs
+            mihomo convert-ruleset classical yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
           fi
           
           # 转换 domain-reject-rules.yaml (behavior: classical)
           if [ -f "domain-reject-rules.yaml" ]; then
-            mihomo convert-ruleset classical domain-reject-rules.yaml publish/domain-reject-rules.mrs
+            mihomo convert-ruleset classical yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
           fi
 
       - name: Publish to release branch
