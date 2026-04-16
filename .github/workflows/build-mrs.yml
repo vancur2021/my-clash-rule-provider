@@ -1,0 +1,53 @@
+name: Build MRS Rule-Set
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '*.yaml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Mihomo
+        run: |
+          MIHOMO_VERSION=$(curl -sL "https://api.github.com/repos/MetaCubeX/mihomo/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          wget -O mihomo.gz "https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64-${MIHOMO_VERSION}.gz"
+          gunzip mihomo.gz
+          chmod +x mihomo
+          sudo mv mihomo /usr/local/bin/
+
+      - name: Convert YAML to MRS
+        run: |
+          mkdir -p publish
+          
+          # 转换 ip-direct-rules.yaml (behavior: ipcidr)
+          if [ -f "ip-direct-rules.yaml" ]; then
+            mihomo convert-ruleset ipcidr ip-direct-rules.yaml publish/ip-direct-rules.mrs
+          fi
+          
+          # 转换 domain-direct-rules.yaml (behavior: classical)
+          if [ -f "domain-direct-rules.yaml" ]; then
+            mihomo convert-ruleset classical domain-direct-rules.yaml publish/domain-direct-rules.mrs
+          fi
+          
+          # 转换 domain-reject-rules.yaml (behavior: classical)
+          if [ -f "domain-reject-rules.yaml" ]; then
+            mihomo convert-ruleset classical domain-reject-rules.yaml publish/domain-reject-rules.mrs
+          fi
+
+      - name: Publish to release branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./publish
+          publish_branch: release
+          force_orphan: true
+          commit_message: "Auto build mrs files"
