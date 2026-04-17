@@ -1,4 +1,6 @@
 payload:
+  - DOMAIN-SUFFIX,
+  - DOMAIN-SUFFIX,api.iturrit.com
   - DOMAIN-SUFFIX,tencent-cloud.net
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN-SUFFIX,xhscdn.com
