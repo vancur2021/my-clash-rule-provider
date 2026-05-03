@@ -1,4 +1,9 @@
 payload:
+  - DOMAIN-SUFFIX,zijieapi.com
+  - DOMAIN-SUFFIX,volcengine.com
+  - DOMAIN-SUFFIX,myqcloud.com
+  - DOMAIN-SUFFIX,servicewechat.com
+  
   - DOMAIN-SUFFIX,tencent-cloud.net
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN-SUFFIX,xhscdn.com
