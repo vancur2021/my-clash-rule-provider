@@ -3,6 +3,7 @@ payload:
   - DOMAIN-SUFFIX,volcengine.com
   - DOMAIN-SUFFIX,myqcloud.com
   - DOMAIN-SUFFIX,servicewechat.com
+  - DOMAIN-SUFFIX,ngrok-agent.com
   
   - DOMAIN-SUFFIX,tencent-cloud.net
   - DOMAIN-SUFFIX,qq.com
