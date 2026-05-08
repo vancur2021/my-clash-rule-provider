@@ -4,8 +4,10 @@ payload:
   - DOMAIN-SUFFIX,myqcloud.com
   - DOMAIN-SUFFIX,servicewechat.com
   - DOMAIN-SUFFIX,ngrok-agent.com
-  
+  - DOMAIN-SUFFIX,tencentcloudapi.com
+  - DOMAIN-KEYWORD,tencent
   - DOMAIN-SUFFIX,tencent-cloud.net
+  - DOMAIN-SUFFIX,volccdn.com
   - DOMAIN-SUFFIX,qq.com
   - DOMAIN-SUFFIX,xhscdn.com
   - DOMAIN-SUFFIX,aliyun.com
