@@ -6,7 +6,6 @@ payload:
   - DOMAIN-SUFFIX,servicewechat.com
   - DOMAIN-SUFFIX,ngrok-agent.com
   - DOMAIN-SUFFIX,tencentcloudapi.com
-  - DOMAIN-KEYWORD,tencent
   - DOMAIN-SUFFIX,tencent-cloud.net
   - DOMAIN-SUFFIX,volccdn.com
   - DOMAIN-SUFFIX,qq.com
@@ -60,12 +59,10 @@ payload:
   - DOMAIN-SUFFIX,acfun.tv
   - DOMAIN-SUFFIX,air-matters.com
   - DOMAIN-SUFFIX,aixifan.com
-  - DOMAIN-KEYWORD,alicdn
-  - DOMAIN-KEYWORD,alipay
-  - DOMAIN-KEYWORD,taobao
+
   - DOMAIN-SUFFIX,amap.com
   - DOMAIN-SUFFIX,autonavi.com
-  - DOMAIN-KEYWORD,baidu
+
   - DOMAIN-SUFFIX,bdimg.com
   - DOMAIN-SUFFIX,bdstatic.com
   - DOMAIN-SUFFIX,bilibili.com
@@ -90,7 +87,6 @@ payload:
   - DOMAIN-SUFFIX,g-cores.com
   - DOMAIN-SUFFIX,godic.net
   - DOMAIN-SUFFIX,gtimg.com
-  - DOMAIN,cdn.hockeyapp.net
   - DOMAIN-SUFFIX,hongxiu.com
   - DOMAIN-SUFFIX,hxcdn.net
   - DOMAIN-SUFFIX,iciba.com
@@ -118,7 +114,6 @@ payload:
   - DOMAIN-SUFFIX,netease.com
   - DOMAIN-SUFFIX,office.com
   - DOMAIN-SUFFIX,office365.com
-  - DOMAIN-KEYWORD,officecdn
   - DOMAIN-SUFFIX,oschina.net
   - DOMAIN-SUFFIX,ppsimg.com
   - DOMAIN-SUFFIX,pstatp.com
@@ -175,11 +170,8 @@ payload:
   - DOMAIN-SUFFIX,zhimg.com
   - DOMAIN-SUFFIX,zimuzu.tv
   - DOMAIN-SUFFIX,zoho.com
-  - DOMAIN,injections.adguard.org
-  - DOMAIN,local.adguard.org
   - DOMAIN-SUFFIX,local
   - DOMAIN-SUFFIX,cn
-  - DOMAIN-KEYWORD,-cn
   - DOMAIN-SUFFIX,jdpay.com
   - DOMAIN-SUFFIX,globalsign.com
   - DOMAIN-SUFFIX,alibaba.com
@@ -190,3 +182,15 @@ payload:
   - DOMAIN-SUFFIX,alibaba_inc.com
   - DOMAIN-SUFFIX,aliyuncs.com
   - DOMAIN-SUFFIX,dingtalk.com
+
+  - DOMAIN-KEYWORD,tencent
+  - DOMAIN-KEYWORD,baidu
+  - DOMAIN-KEYWORD,alicdn
+  - DOMAIN-KEYWORD,alipay
+  - DOMAIN-KEYWORD,taobao
+  - DOMAIN-KEYWORD,officecdn
+  - DOMAIN-KEYWORD,-cn
+
+  - DOMAIN,injections.adguard.org
+  - DOMAIN,local.adguard.org
+  - DOMAIN,cdn.hockeyapp.net
