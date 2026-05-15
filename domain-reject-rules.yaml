@@ -1,8 +1,12 @@
 payload:
+  - '+.stun.gvt1.com'
+  - '+.stun.l.google.com'
+  - '+.stun.services.mozilla.com'
+  - '+.stun.cloudflare.com'
+  - '+.stun.twilio.com'
+  - '+.stun.sipgate.net'
+  - '+.stun.ekiga.net'
+  - '+.stun.ideasip.com'
+  - '+.stun.schlund.de'
+  - '+.stun.voxgratia.org'
   - DOMAIN-SUFFIX,volceapplog.com
-  - DOMAIN-KEYWORD,maplocatesdksnapshot
-  - DOMAIN-KEYWORD,al-log
-  - DOMAIN-KEYWORD,logger
-  - DOMAIN-KEYWORD,debug
-  - DOMAIN-KEYWORD,metrics-picture.d
-  
