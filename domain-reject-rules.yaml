@@ -9,4 +9,5 @@ payload:
   - '+.stun.ideasip.com'
   - '+.stun.schlund.de'
   - '+.stun.voxgratia.org'
+  - '+.stun.l.google.com'
   - DOMAIN-SUFFIX,volceapplog.com
