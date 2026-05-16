@@ -1,13 +1,13 @@
 payload:
-  - '+.stun.gvt1.com'
-  - '+.stun.l.google.com'
-  - '+.stun.services.mozilla.com'
-  - '+.stun.cloudflare.com'
-  - '+.stun.twilio.com'
-  - '+.stun.sipgate.net'
-  - '+.stun.ekiga.net'
-  - '+.stun.ideasip.com'
-  - '+.stun.schlund.de'
-  - '+.stun.voxgratia.org'
-  - '+.stun.l.google.com'
+  - DOMAIN-SUFFIX,stun.gvt1.com
+  - DOMAIN-SUFFIX,stun.l.google.com
+  - DOMAIN-SUFFIX,stun.services.mozilla.com
+  - DOMAIN-SUFFIX,stun.cloudflare.com
+  - DOMAIN-SUFFIX,stun.twilio.com
+  - DOMAIN-SUFFIX,stun.sipgate.net
+  - DOMAIN-SUFFIX,stun.ekiga.net
+  - DOMAIN-SUFFIX,stun.ideasip.com
+  - DOMAIN-SUFFIX,stun.schlund.de
+  - DOMAIN-SUFFIX,stun.voxgratia.org
+  - DOMAIN-SUFFIX,stun.l.google.com
   - DOMAIN-SUFFIX,volceapplog.com
