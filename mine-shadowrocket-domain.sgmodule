@@ -1,0 +1,13 @@
+#!name=我的直连
+#!desc=将域名强制路由为直连 (DIRECT)，覆盖默认代理规则。
+#!author=Assistant
+
+[Rule]
+# 匹配 doubao.com 及其所有子域名走直连
+DOMAIN-SUFFIX,doubao.com,DIRECT
+DOMAIN-SUFFIX,ydycdn.com,DIRECT
+DOMAIN-SUFFIX,volcvideos.com,DIRECT
+DOMAIN-SUFFIX,volcvideo.com,DIRECT
+DOMAIN-SUFFIX,cjjd14.com,DIRECT
+DOMAIN-SUFFIX,qtaeixd.com,DIRECT
+DOMAIN-SUFFIX,eastmoney.com,PROXY
