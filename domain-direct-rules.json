@@ -3,6 +3,8 @@
   "rules": [
     {
       "domain_suffix": [
+        "cloudflare.com",
+        "argotunnel.com",
         "sssrr.org",
         "abyssplayer.com",
         "iamcdn.net",
