@@ -1,4 +1,11 @@
 payload:
+  - DOMAIN-SUFFIX,honorofkings.com
+  - DOMAIN-SUFFIX,vasdgame.com
+  - DOMAIN-SUFFIX,gcloudcs.com
+  - DOMAIN-SUFFIX,gcloudsdk.com
+  - DOMAIN-SUFFIX,hok5v5.com
+  - DOMAIN-SUFFIX,hongkongpaya.com
+  - DOMAIN-SUFFIX,singaporepaya.com
   - DOMAIN-SUFFIX,appsflyersdk.com
   - DOMAIN-SUFFIX,wetest.net
   - DOMAIN-SUFFIX,sgameglobal.com
