@@ -9,5 +9,6 @@ payload:
   - DOMAIN-SUFFIX,stun.ideasip.com
   - DOMAIN-SUFFIX,stun.schlund.de
   - DOMAIN-SUFFIX,stun.voxgratia.org
-  - DOMAIN-SUFFIX,stun.l.google.com
+  - DOMAIN-SUFFIX,stun.chat.bilibili.com
+  - DOMAIN-SUFFIX,stun.voip.blackberry.com
   - DOMAIN-SUFFIX,volceapplog.com
