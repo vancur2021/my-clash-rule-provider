@@ -46,6 +46,13 @@ jobs:
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
           fi
 
+          # 转换 domain-proxy-rules.yaml (behavior: domain)
+          if [ -f "domain-proxy-rules.yaml" ]; then
+            mihomo convert-ruleset domain yaml domain-proxy-rules.yaml publish/domain-proxy-rules.mrs
+          fi
+
+          
+
       - name: Publish to release branch
         uses: peaceiris/actions-gh-pages@v3
         with:
