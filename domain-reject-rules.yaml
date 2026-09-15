@@ -1,14 +1,14 @@
 payload:
-  - DOMAIN-SUFFIX,stun.gvt1.com,REJECT
-  - DOMAIN-SUFFIX,stun.l.google.com,REJECT
-  - DOMAIN-SUFFIX,stun.services.mozilla.com,REJECT
-  - DOMAIN-SUFFIX,stun.cloudflare.com,REJECT
-  - DOMAIN-SUFFIX,stun.twilio.com,REJECT
-  - DOMAIN-SUFFIX,stun.sipgate.net,REJECT
-  - DOMAIN-SUFFIX,stun.ekiga.net,REJECT
-  - DOMAIN-SUFFIX,stun.ideasip.com,REJECT
-  - DOMAIN-SUFFIX,stun.schlund.de,REJECT
-  - DOMAIN-SUFFIX,stun.voxgratia.org,REJECT
-  - DOMAIN-SUFFIX,stun.chat.bilibili.com,REJECT
-  - DOMAIN-SUFFIX,stun.voip.blackberry.com,REJECT
-  - DOMAIN-SUFFIX,volceapplog.com,REJECT
+  - +.stun.gvt1.com
+  - +.stun.l.google.com
+  - +.stun.services.mozilla.com
+  - +.stun.cloudflare.com
+  - +.stun.twilio.com
+  - +.stun.sipgate.net
+  - +.stun.ekiga.net
+  - +.stun.ideasip.com
+  - +.stun.schlund.de
+  - +.stun.voxgratia.org
+  - +.stun.chat.bilibili.com
+  - +.stun.voip.blackberry.com
+  - +.volceapplog.com
