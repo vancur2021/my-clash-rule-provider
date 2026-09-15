@@ -1,12 +1,12 @@
 payload:
-  - DOMAIN-SUFFIX,argotunnel.com,DIRECT
-  - DOMAIN-SUFFIX,515741.xyz,DIRECT
-  - DOMAIN-SUFFIX,528168.xyz,DIRECT
-  - DOMAIN-SUFFIX,8972464.xyz,DIRECT
-  - DOMAIN-SUFFIX,dianjingchuanmei.top,DIRECT
-  - DOMAIN-SUFFIX,dianzhangzhipin.com,DIRECT
-  - DOMAIN-SUFFIX,ziweiai.chat,DIRECT
-  - DOMAIN-SUFFIX,qwen.ai,DIRECT
-  - DOMAIN-SUFFIX,qianwen.com,DIRECT
-  - DOMAIN-SUFFIX,doubao.com,DIRECT
-  - DOMAIN-SUFFIX,deepseek.com,DIRECT
+  - +.argotunnel.com
+  - +.515741.xyz
+  - +.528168.xyz
+  - +.8972464.xyz
+  - +.dianjingchuanmei.top
+  - +.dianzhangzhipin.com
+  - +.ziweiai.chat
+  - +.qwen.ai
+  - +.qianwen.com
+  - +.doubao.com
+  - +.deepseek.com
