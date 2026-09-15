@@ -1,7 +1,4 @@
 payload:
-  - IP-CIDR,47.129.24.88/32,DIRECT,no-resolve
-  - IP-CIDR,103.51.147.178/32,DIRECT,no-resolve
-  - IP-CIDR,38.190.210.249/32,DIRECT,no-resolve
   - DOMAIN-SUFFIX,argotunnel.com,DIRECT
   - DOMAIN-SUFFIX,515741.xyz,DIRECT
   - DOMAIN-SUFFIX,528168.xyz,DIRECT
