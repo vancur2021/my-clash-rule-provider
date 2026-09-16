@@ -1,5 +1,4 @@
 name: Build MRS Rule-Set
-
 on:
   push:
     branches:
@@ -8,6 +7,8 @@ on:
     paths:
       - '*.yaml'
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 0:00 自动触发更新在线规则编译
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -30,17 +31,17 @@ jobs:
       - name: Convert YAML to MRS
         run: |
           mkdir -p publish
-          
+
           # 转换 ip-direct-rules.yaml (behavior: ipcidr)
           if [ -f "ip-direct-rules.yaml" ]; then
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
           fi
-          
+
           # 转换 domain-direct-rules.yaml (behavior: domain)
           if [ -f "domain-direct-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
           fi
-          
+
           # 转换 domain-reject-rules.yaml (behavior: domain)
           if [ -f "domain-reject-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
@@ -51,7 +52,12 @@ jobs:
             mihomo convert-ruleset domain yaml domain-proxy-rules.yaml publish/domain-proxy-rules.mrs
           fi
 
-          
+          # 下载并转换在线 AWAvenue-Ads-Rule 规则 (behavior: domain)
+          curl -sSL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
+          if [ -f "awavenue-ads.yaml" ]; then
+            mihomo convert-ruleset domain yaml awavenue-ads.yaml publish/awavenue-ads.mrs
+            rm -f awavenue-ads.yaml
+          fi
 
       - name: Publish to release branch
         uses: peaceiris/actions-gh-pages@v3
