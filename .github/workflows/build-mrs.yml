@@ -1,4 +1,5 @@
 name: Build MRS Rule-Set
+
 on:
   push:
     branches:
@@ -28,34 +29,40 @@ jobs:
           chmod +x mihomo
           sudo mv mihomo /usr/local/bin/
 
-      - name: Convert YAML to MRS
+      - name: Convert YAML to MRS and List
         run: |
           mkdir -p publish
 
           # 转换 ip-direct-rules.yaml (behavior: ipcidr)
           if [ -f "ip-direct-rules.yaml" ]; then
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
+            # 提取纯文本列表生成 .list
+            grep -E "^ *-" ip-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/ip-direct-rules.list
           fi
 
           # 转换 domain-direct-rules.yaml (behavior: domain)
           if [ -f "domain-direct-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
+            grep -E "^ *-" domain-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-direct-rules.list
           fi
 
           # 转换 domain-reject-rules.yaml (behavior: domain)
           if [ -f "domain-reject-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
+            grep -E "^ *-" domain-reject-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-reject-rules.list
           fi
 
           # 转换 domain-proxy-rules.yaml (behavior: domain)
           if [ -f "domain-proxy-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-proxy-rules.yaml publish/domain-proxy-rules.mrs
+            grep -E "^ *-" domain-proxy-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-proxy-rules.list
           fi
 
           # 下载并转换在线 AWAvenue-Ads-Rule 规则 (behavior: domain)
           curl -sSL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
           if [ -f "awavenue-ads.yaml" ]; then
             mihomo convert-ruleset domain yaml awavenue-ads.yaml publish/awavenue-ads.mrs
+            grep -E "^ *-" awavenue-ads.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/awavenue-ads.list
             rm -f awavenue-ads.yaml
           fi
 
@@ -66,4 +73,4 @@ jobs:
           publish_dir: ./publish
           publish_branch: release
           force_orphan: true
-          commit_message: "Auto build mrs files"
+          commit_message: "Auto build mrs and list files"
