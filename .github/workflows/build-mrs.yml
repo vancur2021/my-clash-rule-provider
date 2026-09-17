@@ -1,4 +1,4 @@
-name: Build MRS, SRS and Geosite Rule-Set
+name: Build MRS, SRS, Geosite and GeoIP Rule-Set
 
 on:
   push:
@@ -128,13 +128,14 @@ jobs:
               main()
           EOF
 
-          # 转换各个文件
+          # 转换 ip-direct-rules.yaml
           if [ -f "ip-direct-rules.yaml" ]; then
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
             python3 convert_rules.py ip-direct-rules.yaml ip-direct-rules ipcidr
             grep -E "^ *-" ip-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/ip-direct-rules.list
           fi
 
+          # 转换各个域名规则
           if [ -f "domain-direct-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
             python3 convert_rules.py domain-direct-rules.yaml domain-direct-rules domain
@@ -168,11 +169,8 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/v2fly/domain-list-community.git compiler
           cd compiler
-
-          # 修复参数：指定 --outputdir
           go run ./ --datapath=../geosite-data --outputdir=../publish --outputname=geosite.dat
 
-          # 校验产物
           if [ ! -f "../publish/geosite.dat" ]; then
             echo "::error::geosite.dat was not generated!"
             exit 1
@@ -181,7 +179,92 @@ jobs:
           cd ..
           rm -rf compiler geosite-data
 
-          echo "=== Final publish directory ==="
+      # ===== 核心新增：编译自定义 geoip.dat =====
+      - name: Build Custom geoip.dat
+        run: |
+          cat << 'EOF' > build_geoip.py
+          import ipaddress, yaml, os
+
+          def encode_varint(n):
+              b = []
+              while n > 0x7f:
+                  b.append((n & 0x7f) | 0x80)
+                  n >>= 7
+              b.append(n & 0x7f)
+              return bytes(b)
+
+          def encode_tag(field_num, wire_type):
+              return encode_varint((field_num << 3) | wire_type)
+
+          def encode_bytes(field_num, data):
+              return encode_tag(field_num, 2) + encode_varint(len(data)) + data
+
+          def encode_str(field_num, text):
+              return encode_bytes(field_num, text.encode('utf-8'))
+
+          def encode_uint32(field_num, val):
+              return encode_tag(field_num, 0) + encode_varint(val)
+
+          def encode_cidr(cidr_str):
+              net = ipaddress.ip_network(cidr_str.strip(), strict=False)
+              cidr_msg = encode_bytes(1, net.network_address.packed) + encode_uint32(2, net.prefixlen)
+              return encode_bytes(2, cidr_msg)
+
+          def encode_geoip(country_code, cidrs):
+              msg = encode_str(1, country_code.upper())
+              for cidr in cidrs:
+                  try:
+                      msg += encode_cidr(cidr)
+                  except ValueError:
+                      continue
+              return encode_bytes(1, msg)
+
+          # 收集 IP 规则：文件名 -> tag
+          ip_groups = {}
+          ip_files = [
+              ("ip-direct-rules.yaml", "DIRECT"),
+              ("ip-proxy-rules.yaml", "PROXY")
+          ]
+
+          for file_name, tag in ip_files:
+              if not os.path.exists(file_name): continue
+              with open(file_name, 'r', encoding='utf-8') as f:
+                  data = yaml.safe_load(f)
+              payload = data.get('payload', []) if isinstance(data, dict) else (data or [])
+              
+              cidrs = []
+              for item in payload:
+                  if not item or not isinstance(item, str): continue
+                  line = item.strip()
+                  if not line or line.startswith('#'): continue
+                  parts = [p.strip() for p in line.split(',')]
+                  if len(parts) >= 2 and parts[0].upper() in ('IP-CIDR', 'IP-CIDR6', 'SRC-IP-CIDR'):
+                      cidrs.append(parts[1])
+                  else:
+                      cidrs.append(parts[0])
+              if cidrs:
+                  ip_groups[tag] = list(dict.fromkeys(cidrs))
+
+          # 编译成 geoip.dat
+          geoip_dat_bytes = b""
+          for tag, cidrs in ip_groups.items():
+              geoip_dat_bytes += encode_geoip(tag, cidrs)
+
+          output_path = "publish/geoip.dat"
+          with open(output_path, "wb") as f:
+              f.write(geoip_dat_bytes)
+          print(f"Successfully generated {output_path} with tags: {list(ip_groups.keys())}")
+          EOF
+
+          python3 build_geoip.py
+          rm -f build_geoip.py
+
+          if [ ! -f "publish/geoip.dat" ]; then
+            echo "::error::geoip.dat was not generated!"
+            exit 1
+          fi
+
+          echo "=== All files in publish ==="
           ls -lh publish/
 
       - name: Publish to release branch
@@ -191,4 +274,4 @@ jobs:
           publish_dir: ./publish
           publish_branch: release
           force_orphan: true
-          commit_message: "Auto build mrs, srs, list and custom geosite.dat"
+          commit_message: "Auto build mrs, srs, list, geosite.dat and geoip.dat"
