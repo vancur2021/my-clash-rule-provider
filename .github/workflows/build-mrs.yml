@@ -54,7 +54,7 @@ jobs:
           mkdir -p geosite-data
 
           cat << 'EOF' > convert_rules.py
-          import sys, os, subprocess, yaml, json
+          import sys, os, subprocess, yaml, json, ipaddress
 
           def main():
               input_yaml = sys.argv[1]
@@ -102,7 +102,7 @@ jobs:
                           domain_suffix.append(val_clean)
                           geosite_lines.append(val_clean)
 
-              # 生成 sing-box SRS
+              # 1. 生成 sing-box SRS 规则
               output_srs = f"publish/{tag_name}.srs"
               headless_rule = {}
               if domain: headless_rule['domain'] = list(dict.fromkeys(domain))
@@ -118,21 +118,33 @@ jobs:
               subprocess.run(["sing-box", "rule-set", "compile", temp_json, "-o", output_srs], check=True)
               if os.path.exists(temp_json): os.remove(temp_json)
 
-              # 输出供 geosite 编译的文本
+              # 2. 输出供 geosite 编译的文本 (仅针对域名)
               if geosite_lines:
                   geosite_file = os.path.join("geosite-data", tag_name.replace("domain-", "").replace("-rules", ""))
                   with open(geosite_file, 'w', encoding='utf-8') as f:
                       f.write("\n".join(dict.fromkeys(geosite_lines)) + "\n")
 
+              # 3. 输出适用于 Shadowrocket 的 .list 规则 (自动识别 IPv4 / IPv6 并补齐前缀)
+              if behavior == 'ipcidr' and ip_cidr:
+                  list_lines = []
+                  for raw in ip_cidr:
+                      try:
+                          net = ipaddress.ip_network(raw.strip(), strict=False)
+                          prefix = "IP-CIDR" if net.version == 4 else "IP-CIDR6"
+                          list_lines.append(f"{prefix},{net}")
+                      except ValueError:
+                          continue
+                  with open(f"publish/{tag_name}.list", "w", encoding="utf-8") as f:
+                      f.write("\n".join(dict.fromkeys(list_lines)) + "\n")
+
           if __name__ == '__main__':
               main()
           EOF
 
-          # 转换 ip-direct-rules.yaml
+          # 转换 ip-direct-rules.yaml (由 Python 自动生成兼容小火箭的 .list)
           if [ -f "ip-direct-rules.yaml" ]; then
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
             python3 convert_rules.py ip-direct-rules.yaml ip-direct-rules ipcidr
-            grep -E "^ *-" ip-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/ip-direct-rules.list
           fi
 
           # 转换各个域名规则
@@ -179,7 +191,7 @@ jobs:
           cd ..
           rm -rf compiler geosite-data
 
-      # ===== 核心新增：编译自定义 geoip.dat =====
+      # ===== 编译自定义 geoip.dat =====
       - name: Build Custom geoip.dat
         run: |
           cat << 'EOF' > build_geoip.py
@@ -219,7 +231,6 @@ jobs:
                       continue
               return encode_bytes(1, msg)
 
-          # 收集 IP 规则：文件名 -> tag
           ip_groups = {}
           ip_files = [
               ("ip-direct-rules.yaml", "DIRECT"),
@@ -245,7 +256,6 @@ jobs:
               if cidrs:
                   ip_groups[tag] = list(dict.fromkeys(cidrs))
 
-          # 编译成 geoip.dat
           geoip_dat_bytes = b""
           for tag, cidrs in ip_groups.items():
               geoip_dat_bytes += encode_geoip(tag, cidrs)
