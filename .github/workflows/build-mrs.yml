@@ -51,15 +51,14 @@ jobs:
       - name: Convert YAML to MRS, SRS and List
         run: |
           mkdir -p publish
-          mkdir -p geosite-data # 存放准备编译成 geosite 的文本目录
+          mkdir -p geosite-data
 
-          # 生成辅助转换脚本
           cat << 'EOF' > convert_rules.py
           import sys, os, subprocess, yaml, json
 
           def main():
               input_yaml = sys.argv[1]
-              tag_name = sys.argv[2] # 例如 direct, proxy, reject
+              tag_name = sys.argv[2]
               behavior = sys.argv[3] if len(sys.argv) > 3 else "domain"
 
               if not os.path.exists(input_yaml):
@@ -103,7 +102,7 @@ jobs:
                           domain_suffix.append(val_clean)
                           geosite_lines.append(val_clean)
 
-              # 1. 编译 sing-box SRS
+              # 生成 sing-box SRS
               output_srs = f"publish/{tag_name}.srs"
               headless_rule = {}
               if domain: headless_rule['domain'] = list(dict.fromkeys(domain))
@@ -119,7 +118,7 @@ jobs:
               subprocess.run(["sing-box", "rule-set", "compile", temp_json, "-o", output_srs], check=True)
               if os.path.exists(temp_json): os.remove(temp_json)
 
-              # 2. 输出供 geosite 编译的文件 (仅针对域名集合)
+              # 输出供 geosite 编译的文本
               if geosite_lines:
                   geosite_file = os.path.join("geosite-data", tag_name.replace("domain-", "").replace("-rules", ""))
                   with open(geosite_file, 'w', encoding='utf-8') as f:
@@ -129,35 +128,31 @@ jobs:
               main()
           EOF
 
-          # 转换 ip-direct-rules.yaml
+          # 转换各个文件
           if [ -f "ip-direct-rules.yaml" ]; then
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
             python3 convert_rules.py ip-direct-rules.yaml ip-direct-rules ipcidr
             grep -E "^ *-" ip-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/ip-direct-rules.list
           fi
 
-          # 转换 domain-direct-rules.yaml
           if [ -f "domain-direct-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
             python3 convert_rules.py domain-direct-rules.yaml domain-direct-rules domain
             grep -E "^ *-" domain-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-direct-rules.list
           fi
 
-          # 转换 domain-reject-rules.yaml
           if [ -f "domain-reject-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
             python3 convert_rules.py domain-reject-rules.yaml domain-reject-rules domain
             grep -E "^ *-" domain-reject-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-reject-rules.list
           fi
 
-          # 转换 domain-proxy-rules.yaml
           if [ -f "domain-proxy-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-proxy-rules.yaml publish/domain-proxy-rules.mrs
             python3 convert_rules.py domain-proxy-rules.yaml domain-proxy-rules domain
             grep -E "^ *-" domain-proxy-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-proxy-rules.list
           fi
 
-          # 下载并转换在线 AWAvenue-Ads-Rule 规则
           curl -sSL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
           if [ -f "awavenue-ads.yaml" ]; then
             mihomo convert-ruleset domain yaml awavenue-ads.yaml publish/awavenue-ads.mrs
@@ -168,25 +163,26 @@ jobs:
 
           rm -f convert_rules.py
 
-      # ===== 核心新增：编译自定义 geosite.dat =====
+      # ===== 编译自定义 geosite.dat =====
       - name: Build Custom geosite.dat
         run: |
-          # 克隆官方编译器
           git clone --depth=1 https://github.com/v2fly/domain-list-community.git compiler
           cd compiler
 
-          # 【选项 A：自用轻量版】仅打包自己 geosite-data 里的 tag
-          go run ./ --datapath=../geosite-data --outputname=../publish/geosite.dat
+          # 修复参数：指定 --outputdir
+          go run ./ --datapath=../geosite-data --outputdir=../publish --outputname=geosite.dat
 
-          # -------------------------------------------------------------
-          # 【选项 B：全量增强版（可选）】如果你想保留官方所有标签 (如 cn, google 等)，
-          # 同时把你自己的直连/代理/拦截覆盖进去，只需将自建文件拷贝进官方 data 目录：
-          # cp -rf ../geosite-data/* ./data/
-          # go run ./ --datapath=./data --outputname=../publish/geosite.dat
-          # -------------------------------------------------------------
+          # 校验产物
+          if [ ! -f "../publish/geosite.dat" ]; then
+            echo "::error::geosite.dat was not generated!"
+            exit 1
+          fi
 
           cd ..
           rm -rf compiler geosite-data
+
+          echo "=== Final publish directory ==="
+          ls -lh publish/
 
       - name: Publish to release branch
         uses: peaceiris/actions-gh-pages@v3
