@@ -12,3 +12,22 @@ payload:
   - +.stun.chat.bilibili.com
   - +.stun.voip.blackberry.com
   - +.volceapplog.com
+  - +.stun.hitv.com
+  - +.stun.chat.bilibili.com
+  - +.stun.l.google.com
+  - +.stun.cloudflare.com
+  - +.turn.cloudflare.com
+  - +.global.stun.twilio.com
+  - +.global.turn.twilio.com
+  - .+stun.l.google.com
+  - .+stunprotocol.org
+  - .+services.mozilla.com
+  - .+stun.twilio.com
+  - .+global.stun.twilio.com
+  - .+stun.nextcloud.com
+  - .+stun.sipgate.net
+  - .+stun.ekiga.net
+  - .+stun.schlund.de
+  - .+stun.voipbuster.com
+  - .+stun.voipstunt.com
+  - .+stun.linphone.org
