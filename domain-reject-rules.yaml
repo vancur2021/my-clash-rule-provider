@@ -19,15 +19,15 @@ payload:
   - +.turn.cloudflare.com
   - +.global.stun.twilio.com
   - +.global.turn.twilio.com
-  - .+stun.l.google.com
-  - .+stunprotocol.org
-  - .+services.mozilla.com
-  - .+stun.twilio.com
-  - .+global.stun.twilio.com
-  - .+stun.nextcloud.com
-  - .+stun.sipgate.net
-  - .+stun.ekiga.net
-  - .+stun.schlund.de
-  - .+stun.voipbuster.com
-  - .+stun.voipstunt.com
-  - .+stun.linphone.org
+  - +.stun.l.google.com
+  - +.stunprotocol.org
+  - +.services.mozilla.com
+  - +.stun.twilio.com
+  - +.global.stun.twilio.com
+  - +.stun.nextcloud.com
+  - +.stun.sipgate.net
+  - +.stun.ekiga.net
+  - +.stun.schlund.de
+  - +.stun.voipbuster.com
+  - +.stun.voipstunt.com
+  - +.stun.linphone.org
