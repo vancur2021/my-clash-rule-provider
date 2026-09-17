@@ -1,4 +1,4 @@
-name: Build MRS Rule-Set
+name: Build MRS and SRS Rule-Set
 
 on:
   push:
@@ -21,6 +21,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Python & PyYAML
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install pyyaml
+
       - name: Setup Mihomo
         run: |
           MIHOMO_VERSION=$(curl -sL "https://api.github.com/repos/MetaCubeX/mihomo/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
@@ -29,42 +34,144 @@ jobs:
           chmod +x mihomo
           sudo mv mihomo /usr/local/bin/
 
-      - name: Convert YAML to MRS and List
+      - name: Setup sing-box
+        run: |
+          # 自动获取最新 sing-box 版本并安装
+          SINGBOX_TAG=$(curl -sL "https://api.github.com/repos/SagerNet/sing-box/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          SINGBOX_VERSION="${SINGBOX_TAG#v}"
+          wget -O sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/${SINGBOX_TAG}/sing-box-${SINGBOX_VERSION}-linux-amd64.tar.gz"
+          tar -xzf sing-box.tar.gz
+          sudo mv "sing-box-${SINGBOX_VERSION}-linux-amd64/sing-box" /usr/local/bin/
+          rm -rf sing-box*
+          sing-box version
+
+      - name: Convert YAML to MRS, SRS and List
         run: |
           mkdir -p publish
 
-          # 转换 ip-direct-rules.yaml (behavior: ipcidr)
+          # 1. 动态生成 sing-box 规则解析与编译脚本
+          cat << 'EOF' > convert_srs.py
+          import sys, os, subprocess, yaml, json
+
+          if len(sys.argv) < 3:
+              print("Usage: python3 convert_srs.py <input.yaml> <output.srs> [behavior]")
+              sys.exit(1)
+
+          input_yaml = sys.argv[1]
+          output_srs = sys.argv[2]
+          behavior = sys.argv[3] if len(sys.argv) > 3 else None
+
+          if not os.path.exists(input_yaml):
+              print(f"File {input_yaml} not found, skipping.")
+              sys.exit(0)
+
+          with open(input_yaml, 'r', encoding='utf-8') as f:
+              data = yaml.safe_load(f)
+
+          payload = data.get('payload', []) if isinstance(data, dict) else []
+          if not payload and isinstance(data, list):
+              payload = data
+
+          domain, domain_suffix, domain_keyword, domain_regex = [], [], [], []
+          ip_cidr, source_ip_cidr, port, process_name = [], [], [], []
+
+          for item in payload:
+              if not item or not isinstance(item, str):
+                  continue
+              line = item.strip()
+              if not line or line.startswith('#'):
+                  continue
+
+              parts = [p.strip() for p in line.split(',')]
+              # 经典 Clash 格式：DOMAIN-SUFFIX,xxx
+              if len(parts) >= 2 and parts[0].upper() in (
+                  'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 'DOMAIN-REGEX',
+                  'IP-CIDR', 'IP-CIDR6', 'SRC-IP-CIDR', 'DST-PORT', 'PROCESS-NAME'
+              ):
+                  rule_type, val = parts[0].upper(), parts[1]
+                  if rule_type == 'DOMAIN': domain.append(val)
+                  elif rule_type == 'DOMAIN-SUFFIX': domain_suffix.append(val.lstrip('.'))
+                  elif rule_type == 'DOMAIN-KEYWORD': domain_keyword.append(val)
+                  elif rule_type == 'DOMAIN-REGEX': domain_regex.append(val)
+                  elif rule_type in ('IP-CIDR', 'IP-CIDR6'): ip_cidr.append(val)
+                  elif rule_type == 'SRC-IP-CIDR': source_ip_cidr.append(val)
+                  elif rule_type == 'DST-PORT':
+                      try: port.append(int(val))
+                      except ValueError: pass
+                  elif rule_type == 'PROCESS-NAME': process_name.append(val)
+              else:
+                  # Mihomo 纯 domain 或 ipcidr behavior
+                  if behavior == 'ipcidr' or '/' in line:
+                      ip_cidr.append(line.split(',')[0].strip())
+                  else:
+                      # 去除 '+.' 或 '.' 前缀，sing-box 1.9+ 的 domain_suffix 会自动匹配该域名及其全部子域名
+                      val = line.lstrip('+').lstrip('.')
+                      domain_suffix.append(val)
+
+          headless_rule = {}
+          if domain: headless_rule['domain'] = list(dict.fromkeys(domain))
+          if domain_suffix: headless_rule['domain_suffix'] = list(dict.fromkeys(domain_suffix))
+          if domain_keyword: headless_rule['domain_keyword'] = list(dict.fromkeys(domain_keyword))
+          if domain_regex: headless_rule['domain_regex'] = list(dict.fromkeys(domain_regex))
+          if ip_cidr: headless_rule['ip_cidr'] = list(dict.fromkeys(ip_cidr))
+          if source_ip_cidr: headless_rule['source_ip_cidr'] = list(dict.fromkeys(source_ip_cidr))
+          if port: headless_rule['port'] = list(dict.fromkeys(port))
+          if process_name: headless_rule['process_name'] = list(dict.fromkeys(process_name))
+
+          ruleset = {
+              "version": 2,
+              "rules": [headless_rule] if headless_rule else []
+          }
+
+          temp_json = output_srs + ".temp.json"
+          with open(temp_json, 'w', encoding='utf-8') as f:
+              json.dump(ruleset, f, indent=2, ensure_ascii=False)
+
+          subprocess.run(["sing-box", "rule-set", "compile", temp_json, "-o", output_srs], check=True)
+          if os.path.exists(temp_json):
+              os.remove(temp_json)
+          print(f"Successfully compiled {output_srs}")
+          EOF
+
+          # 2. 转换 ip-direct-rules.yaml (behavior: ipcidr)
           if [ -f "ip-direct-rules.yaml" ]; then
             mihomo convert-ruleset ipcidr yaml ip-direct-rules.yaml publish/ip-direct-rules.mrs
-            # 提取纯文本列表生成 .list
+            python3 convert_srs.py ip-direct-rules.yaml publish/ip-direct-rules.srs ipcidr
             grep -E "^ *-" ip-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/ip-direct-rules.list
           fi
 
-          # 转换 domain-direct-rules.yaml (behavior: domain)
+          # 3. 转换 domain-direct-rules.yaml (behavior: domain)
           if [ -f "domain-direct-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
+            python3 convert_srs.py domain-direct-rules.yaml publish/domain-direct-rules.srs domain
             grep -E "^ *-" domain-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-direct-rules.list
           fi
 
-          # 转换 domain-reject-rules.yaml (behavior: domain)
+          # 4. 转换 domain-reject-rules.yaml (behavior: domain)
           if [ -f "domain-reject-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
+            python3 convert_srs.py domain-reject-rules.yaml publish/domain-reject-rules.srs domain
             grep -E "^ *-" domain-reject-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-reject-rules.list
           fi
 
-          # 转换 domain-proxy-rules.yaml (behavior: domain)
+          # 5. 转换 domain-proxy-rules.yaml (behavior: domain)
           if [ -f "domain-proxy-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-proxy-rules.yaml publish/domain-proxy-rules.mrs
+            python3 convert_srs.py domain-proxy-rules.yaml publish/domain-proxy-rules.srs domain
             grep -E "^ *-" domain-proxy-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-proxy-rules.list
           fi
 
-          # 下载并转换在线 AWAvenue-Ads-Rule 规则 (behavior: domain)
+          # 6. 下载并转换在线 AWAvenue-Ads-Rule 规则 (behavior: domain)
           curl -sSL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
           if [ -f "awavenue-ads.yaml" ]; then
             mihomo convert-ruleset domain yaml awavenue-ads.yaml publish/awavenue-ads.mrs
+            python3 convert_srs.py awavenue-ads.yaml publish/awavenue-ads.srs domain
             grep -E "^ *-" awavenue-ads.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/awavenue-ads.list
             rm -f awavenue-ads.yaml
           fi
+
+          # 清理临时转换脚本
+          rm -f convert_srs.py
 
       - name: Publish to release branch
         uses: peaceiris/actions-gh-pages@v3
@@ -73,4 +180,4 @@ jobs:
           publish_dir: ./publish
           publish_branch: release
           force_orphan: true
-          commit_message: "Auto build mrs and list files"
+          commit_message: "Auto build mrs, srs and list files"
