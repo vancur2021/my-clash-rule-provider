@@ -2,7 +2,6 @@ payload:
   - +.stun.gvt1.com
   - +.stun.l.google.com
   - +.stun.services.mozilla.com
-  - +.stun.cloudflare.com
   - +.stun.twilio.com
   - +.stun.sipgate.net
   - +.stun.ekiga.net
@@ -15,8 +14,6 @@ payload:
   - +.stun.hitv.com
   - +.stun.chat.bilibili.com
   - +.stun.l.google.com
-  - +.stun.cloudflare.com
-  - +.turn.cloudflare.com
   - +.global.stun.twilio.com
   - +.global.turn.twilio.com
   - +.stun.l.google.com
