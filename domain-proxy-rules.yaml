@@ -1,4 +1,9 @@
 payload:
+  - +.argotunnel.com
+  - +.cftunnel.com
+  - +.cloudflare.com
+  - +.api.528168.xyz
+  
   - +.honorofkings.com
   - +.vasdgame.com
   - +.gcloudsdk.com
