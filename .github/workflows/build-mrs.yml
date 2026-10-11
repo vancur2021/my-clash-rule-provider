@@ -147,30 +147,30 @@ jobs:
             python3 convert_rules.py ip-direct-rules.yaml ip-direct-rules ipcidr
           fi
 
-          # 转换各个域名规则
+          # 转换各个域名规则（去掉行首的 "-"、引号、注释以及 "+"/"+." 前缀）
           if [ -f "domain-direct-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-direct-rules.yaml publish/domain-direct-rules.mrs
             python3 convert_rules.py domain-direct-rules.yaml domain-direct-rules domain
-            grep -E "^ *-" domain-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-direct-rules.list
+            grep -E "^ *-" domain-direct-rules.yaml | sed -e "s/^ *- *//" -e "s/^+\.*//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-direct-rules.list
           fi
 
           if [ -f "domain-reject-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-reject-rules.yaml publish/domain-reject-rules.mrs
             python3 convert_rules.py domain-reject-rules.yaml domain-reject-rules domain
-            grep -E "^ *-" domain-reject-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-reject-rules.list
+            grep -E "^ *-" domain-reject-rules.yaml | sed -e "s/^ *- *//" -e "s/^+\.*//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-reject-rules.list
           fi
 
           if [ -f "domain-proxy-rules.yaml" ]; then
             mihomo convert-ruleset domain yaml domain-proxy-rules.yaml publish/domain-proxy-rules.mrs
             python3 convert_rules.py domain-proxy-rules.yaml domain-proxy-rules domain
-            grep -E "^ *-" domain-proxy-rules.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-proxy-rules.list
+            grep -E "^ *-" domain-proxy-rules.yaml | sed -e "s/^ *- *//" -e "s/^+\.*//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/domain-proxy-rules.list
           fi
 
           curl -sSL "https://raw.githubusercontent.com/TG-Twilight/AWAvenue-Ads-Rule/main/Filters/AWAvenue-Ads-Rule-Clash.yaml" -o awavenue-ads.yaml
           if [ -f "awavenue-ads.yaml" ]; then
             mihomo convert-ruleset domain yaml awavenue-ads.yaml publish/awavenue-ads.mrs
             python3 convert_rules.py awavenue-ads.yaml awavenue-ads domain
-            grep -E "^ *-" awavenue-ads.yaml | sed -e "s/^ *- *//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/awavenue-ads.list
+            grep -E "^ *-" awavenue-ads.yaml | sed -e "s/^ *- *//" -e "s/^+\.*//" -e "s/['\"]//g" -e "s/ *#.*//g" > publish/awavenue-ads.list
             rm -f awavenue-ads.yaml
           fi
 
