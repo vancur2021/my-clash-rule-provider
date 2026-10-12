@@ -91,3 +91,8 @@ payload:
 
   # Google AdMob 移动广告（百度网盘集成）
   - +.googleads.g.doubleclick.net
+
+  # 京东广告曝光与计费追踪
+  - +.ex.m.jd.com
+  # 京东精准广告营销投放平台
+  - +.dsap.jd.com
