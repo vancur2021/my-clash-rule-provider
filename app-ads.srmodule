@@ -2,6 +2,7 @@
 #!desc=移动端广告
 
 [Rule]
+
 # 铁路 12306 开屏广告
 DOMAIN-SUFFIX,ad.12306.cn,REJECT
 # 高德地图“擎天柱”开屏与弹窗广告
