@@ -1,6 +1,7 @@
 #!name=hok global
 #!desc=王者荣耀 国际服
 
+[Rule]
 DOMAIN-SUFFIX,honorofkings.com,PROXY
 DOMAIN-SUFFIX,vasdgame.com,PROXY
 DOMAIN-SUFFIX,gcloudsdk.com,PROXY
