@@ -1,15 +1,4 @@
 payload:
-  - +.zash.run.place
-  - +.360.net
-  - +.fofa.info
-  - +.nosec.org
-  - +.threatbook.com
-  - +.antping.com
-  - +.528168.xyz
-  - +.515741.xyz
-  - +.weibo.cn
-  - +.cmvideo.cn
-  - +.bestv.cn
   - +.10000.com
   - +.10010.com
   - +.10085.cn
@@ -24,11 +13,8 @@ payload:
   - +.115cdn.com
   - +.118114.net
   - +.120ask.com
-  - +.12123.gov.cn
-  - +.122.gov.cn
   - +.12306.cn
   - +.12315.cn
-  - +.12333.gov.cn
   - +.1234567.com.cn
   - +.123clouddisk.com
   - +.123menpiao.com
@@ -61,6 +47,7 @@ payload:
   - +.300hu.com
   - +.360.cn
   - +.360.com
+  - +.360.net
   - +.360buyimg.com
   - +.360kan.com
   - +.360safe.com
@@ -76,11 +63,13 @@ payload:
   - +.4399api.net
   - +.4399sy.com
   - +.51.la
+  - +.515741.xyz
   - +.51cto.com
   - +.51downapp.cn
   - +.51job.com
   - +.51jobcdn.com
   - +.51test.net
+  - +.528168.xyz
   - +.58.com
   - +.5eplay.com
   - +.5eplaycdn.com
@@ -102,7 +91,6 @@ payload:
   - +.agoralab.co
   - +.aihuishou.com
   - +.airchina.com
-  - +.aistudio.baidu.com
   - +.aizhan.com
   - +.aliapp.org
   - +.alibaba-inc.com
@@ -135,13 +123,13 @@ payload:
   - +.anjuke.com
   - +.anjukestatic.com
   - +.anquan.com
+  - +.antping.com
   - +.anythinktech.com
   - +.apicloud.com
   - +.apifox.com
   - +.apipost.cn
   - +.apitd.net
   - +.appgallery.com
-  - +.appldnld.apple.com
   - +.apple-mapkit.com
   - +.apple.com
   - +.appvipshop.com
@@ -169,6 +157,7 @@ payload:
   - +.beisen.com
   - +.beizi.biz
   - +.bestore.com
+  - +.bestv.cn
   - +.bggd.com
   - +.bigmodel.cn
   - +.biliapi.com
@@ -221,7 +210,6 @@ payload:
   - +.ccb.com
   - +.cctv.com
   - +.cctvpic.com
-  - +.cdn.jetbrains.com
   - +.ceair.com
   - +.cebbank.com
   - +.cfca.com.cn
@@ -244,7 +232,6 @@ payload:
   - +.chinadaily.com.cn
   - +.chinamobile.com
   - +.chinanews.com
-  - +.chinatax.gov.cn
   - +.chinatelecom.com.cn
   - +.chinaunicom.com
   - +.chinaz.com
@@ -270,6 +257,7 @@ payload:
   - +.cmpay.com
   - +.cmread.com
   - +.cmschina.com
+  - +.cmvideo.cn
   - +.cnbeta.com
   - +.cnblogs.com
   - +.cnfol.com
@@ -287,7 +275,6 @@ payload:
   - +.coloros.com
   - +.coocaa.com
   - +.cpatrk.net
-  - +.creditchina.gov.cn
   - +.crlocsp.cn
   - +.csair.com
   - +.csdn.net
@@ -299,7 +286,6 @@ payload:
   - +.dahuatech.com
   - +.damai.cn
   - +.dangdang.com
-  - +.dashscope.aliyuncs.com
   - +.day.app
   - +.dcarapi.com
   - +.dcarimg.com
@@ -313,7 +299,6 @@ payload:
   - +.deepseek.com
   - +.deepseeksvc.com
   - +.delicloud.com
-  - +.delivery.mp.microsoft.com
   - +.dewu.com
   - +.dewucdn.com
   - +.dfzq.com.cn
@@ -335,13 +320,11 @@ payload:
   - +.dingtalk.com
   - +.dingtalkapps.com
   - +.dingxiang-inc.com
-  - +.dl.delivery.mp.microsoft.com
   - +.dlife.cn
   - +.dns.pub
   - +.dnse2.com
   - +.dnspod.com
   - +.dnspod.net
-  - +.docs.qq.com
   - +.docsqq.com
   - +.doh.pub
   - +.dongao.com
@@ -364,11 +347,8 @@ payload:
   - +.douyinvod.com
   - +.douyu.com
   - +.douyucdn.cn
-  - +.download.microsoft.com
-  - +.download.visualstudio.microsoft.com
   - +.dpfile.com
   - +.drivergenius.com
-  - +.drivers.amd.com
   - +.drivethelife.com
   - +.duba.com
   - +.duokan.com
@@ -400,8 +380,6 @@ payload:
   - +.eol.cn
   - +.epson.com.cn
   - +.eqxiu.com
-  - +.ernie.baidu.com
-  - +.etax.chinatax.gov.cn
   - +.eudic.net
   - +.exam8.com
   - +.ezviz.com
@@ -423,6 +401,7 @@ payload:
   - +.flysleep.cn
   - +.fnnas.com
   - +.fnos.net
+  - +.fofa.info
   - +.foundersc.com
   - +.foxmail.com
   - +.fqnovel.com
@@ -435,7 +414,6 @@ payload:
   - +.gaoding.com
   - +.gaokao.com
   - +.gdtimg.com
-  - +.gdzwfw.gov.cn
   - +.geekpark.net
   - +.geetest.com
   - +.gensee.com
@@ -449,7 +427,6 @@ payload:
   - +.giteeusercontent.com
   - +.gitlink.org.cn
   - +.gizwits.com
-  - +.gjzwfw.gov.cn
   - +.glodon.com
   - +.gnway.cc
   - +.gnway.org
@@ -460,7 +437,6 @@ payload:
   - +.gree.com
   - +.growingio.com
   - +.gryphline.com
-  - +.gsxt.gov.cn
   - +.gtht.com
   - +.gtimg.cn
   - +.gtimg.com
@@ -470,7 +446,6 @@ payload:
   - +.guazi.com
   - +.guazistatic.com
   - +.guokr.com
-  - +.gz.gov.cn
   - +.haier.com
   - +.haodf.com
   - +.haozip.com
@@ -530,7 +505,6 @@ payload:
   - +.hubcloud.com.cn
   - +.hujiang.com
   - +.hunantv.com
-  - +.hunyuan.tencent.com
   - +.huodongxing.com
   - +.huorong.cn
   - +.huoshanimg.com
@@ -596,7 +570,6 @@ payload:
   - +.jpush.cn
   - +.jpush.io
   - +.jsdelivr.net
-  - +.jszwfw.gov.cn
   - +.juejin.cn
   - +.juejin.im
   - +.jumei.com
@@ -648,7 +621,6 @@ payload:
   - +.livehwc3.cn
   - +.lizhi.fm
   - +.lnk0.com
-  - +.ls.apple.com
   - +.luckincoffee.com
   - +.lumi.cn
   - +.ly.com
@@ -657,11 +629,8 @@ payload:
   - +.maoyan.com
   - +.mastergo.com
   - +.maxwealthfl.com
-  - +.mca.gov.cn
   - +.me.com
   - +.med66.com
-  - +.meeting.qq.com
-  - +.meeting.tencent.com
   - +.meishesdk.com
   - +.meituan.com
   - +.meituan.net
@@ -688,26 +657,19 @@ payload:
   - +.minimax.io
   - +.minimaxi.com
   - +.miot.com
-  - +.mirrors.aliyun.com
-  - +.mirrors.cloud.tencent.com
   - +.mirrors.tuna.tsinghua.edu.cn
   - +.mirrors.ustc.edu.cn
   - +.miui.com
   - +.mmarket.com
   - +.mmstat.com
   - +.mob.com
-  - +.mof.gov.cn
   - +.mogu.com
-  - +.mohrss.gov.cn
   - +.mokahr.com
   - +.moonshot.ai
   - +.moonshot.cn
-  - +.mot.gov.cn
   - +.msn.cn
   - +.msn.com
   - +.mubu.com
-  - +.music.163.com
-  - +.music.qq.com
   - +.my-imcloud.com
   - +.myhuaweicloud.com
   - +.myoppo.com
@@ -720,8 +682,7 @@ payload:
   - +.neea.edu.cn
   - +.neixin.cn
   - +.netease.com
-  - +.nhsa.gov.cn
-  - +.nmpa.gov.cn
+  - +.nosec.org
   - +.npmmirror.com
   - +.ntp.org.cn
   - +.nubia.com
@@ -732,7 +693,6 @@ payload:
   - +.offcn.com
   - +.office.com
   - +.office.net
-  - +.officecdn.microsoft.com
   - +.onedrive.com
   - +.oneplus.com
   - +.oneplus.net
@@ -742,17 +702,14 @@ payload:
   - +.oppo.com
   - +.oray.com
   - +.orvibo.com
-  - +.oscdn.apple.com
   - +.oschina.net
   - +.oshwhub.com
   - +.paddlepaddle.org.cn
-  - +.pan.baidu.com
   - +.pangolin-sdk-toutiao-b.com
   - +.pangolin-sdk-toutiao.com
   - +.pangolin-sdk-toutiao1.com
   - +.pasc.com.cn
   - +.pconline.com.cn
-  - +.pcs.baidu.com
   - +.pddpic.com
   - +.people.com.cn
   - +.perfectworld.com
@@ -762,7 +719,6 @@ payload:
   - +.pingan.com
   - +.pipi.cn
   - +.pipix.com
-  - +.plugins.jetbrains.com
   - +.ppsport.com
   - +.pptv.com
   - +.processon.com
@@ -771,7 +727,6 @@ payload:
   - +.puata.info
   - +.pupuapi.com
   - +.pupumall.com
-  - +.push.apple.com
   - +.pwrd.com
   - +.qcc.com
   - +.qchannel01.cn
@@ -802,7 +757,6 @@ payload:
   - +.rarlab.com
   - +.realme.com
   - +.realtek.com
-  - +.registry.npmmirror.com
   - +.retouchpics.com
   - +.robam.com
   - +.roborock.com
@@ -810,7 +764,6 @@ payload:
   - +.ronghub.com
   - +.rujia.com.cn
   - +.rumt-zh.com
-  - +.samr.gov.cn
   - +.sanguosha.com
   - +.sankuai.com
   - +.seasun.com
@@ -821,25 +774,21 @@ payload:
   - +.sensorsdata.cn
   - +.servicewechat.com
   - +.sgsgame.com
-  - +.sh.gov.cn
   - +.shanbay.com
   - +.shandagames.com
   - +.sharepoint.com
   - +.shengqugames.com
   - +.shimo.im
   - +.shimolife.com
-  - +.shouji.baidu.com
   - +.showdoc.com.cn
   - +.showstart.com
   - +.sigmob.cn
   - +.sina.com.cn
   - +.sinaimg.cn
-  - +.siri.apple.com
   - +.skype.com
   - +.skyworth.com
   - +.sm.cn
   - +.smartisan.com
-  - +.smoot.apple.com
   - +.smtcdns.com
   - +.smzdm.com
   - +.snssdk.com
@@ -851,17 +800,14 @@ payload:
   - +.sohucs.com
   - +.soulapp.cn
   - +.spdb.com.cn
-  - +.sports.qq.com
   - +.sspai.com
   - +.starrails.com
   - +.staticfile.org
   - +.stcn.com
   - +.steamchina.com
   - +.stepfun.com
-  - +.study.163.com
   - +.suning.com
   - +.supor.com
-  - +.swcdn.apple.com
   - +.synology.cn
   - +.synology.com
   - +.t3go.cn
@@ -884,6 +830,7 @@ payload:
   - +.tenpay.com
   - +.the9.com
   - +.thepaper.cn
+  - +.threatbook.com
   - +.ths8.com
   - +.thsi.cn
   - +.tiangong.cn
@@ -896,7 +843,6 @@ payload:
   - +.tmall.com
   - +.tmall.hk
   - +.tmtpost.com
-  - +.tongyi.aliyun.com
   - +.tongyi.com
   - +.toutiao.com
   - +.toutiaoapi.com
@@ -932,8 +878,6 @@ payload:
   - +.unionpayintl.com
   - +.uniontech.com
   - +.uos.cn
-  - +.update.microsoft.com
-  - +.v.qq.com
   - +.vip.com
   - +.vivo.com
   - +.vivoglobal.com
@@ -945,7 +889,6 @@ payload:
   - +.voovmeeting.com
   - +.vqq.com
   - +.vsassets.io
-  - +.waimai.meituan.com
   - +.wanfangdata.com.cn
   - +.wanmei.com
   - +.weaver.com.cn
@@ -953,13 +896,13 @@ payload:
   - +.wechatos.net
   - +.wechatpay-global.com
   - +.wechatpay.cn
+  - +.weibo.cn
   - +.weibo.com
   - +.weibocdn.com
   - +.weixin.com
   - +.weixinbridge.com
   - +.weiyun.com
   - +.wenjuan.com
-  - +.weread.qq.com
   - +.windows.com
   - +.windowsupdate.com
   - +.wiz.cn
@@ -998,7 +941,6 @@ payload:
   - +.xueqiu.com
   - +.xuetangx.com
   - +.xuexi.cn
-  - +.y.qq.com
   - +.yangcong345.com
   - +.yangkeduo.com
   - +.yanxuan.com
@@ -1006,13 +948,11 @@ payload:
   - +.yicai.com
   - +.yiche.com
   - +.yinxiang.com
-  - +.yiyan.baidu.com
   - +.yiyaojd.com
   - +.yonyou.com
   - +.youdao.com
   - +.youku.com
   - +.youkupic.com
-  - +.yuanbao.tencent.com
   - +.yuanfudao.com
   - +.yuanshen.com
   - +.yuewen.com
@@ -1022,6 +962,7 @@ payload:
   - +.yyclouds.com
   - +.yystatic.com
   - +.zaodian.com
+  - +.zash.run.place
   - +.zdmimg.com
   - +.zego.im
   - +.zenlesszonezero.com
@@ -1042,7 +983,6 @@ payload:
   - +.ziroom.com.cn
   - +.ziroomstay.com
   - +.ziweiai.chat
-  - +.zjzwfw.gov.cn
   - +.zol.com.cn
   - +.zongheng.com
   - +.zt-express.com
