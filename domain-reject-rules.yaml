@@ -1,5 +1,14 @@
 # Clash rule-provider (behavior: domain)
 payload:
+  - '+.stun.chat.bilibili.com'
+  - '+.stun.hitv.com'
+  - '+.stun.miwifi.com'
+  - '+.stunprotocol.org'
+  - '+.stun.l.google.com'
+  - '+.stun.cloudflare.com'
+  - '+.stun.syncthing.net'
+  - '+.stun.qq.com'
+  - '+.turn.google.com'
   - '+.api-access.pangolin-sdk-toutiao1.com'
   - '+.api-access.pangolin-sdk-toutiao-b.com'
   - '+.pglstatp-toutiao.com'
