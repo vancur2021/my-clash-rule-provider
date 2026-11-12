@@ -1,5 +1,10 @@
 # Clash rule-provider (behavior: domain)
 payload:
+  - '+.ex.m.jd.com'
+  - '+.mllog.jd.com'
+  - '+.blackhole.m.jd.com'
+  - '+.wl.jd.com'
+  - '+.anti-sdk-report.m.jd.com'
   - '+.stun.chat.bilibili.com'
   - '+.stun.hitv.com'
   - '+.stun.miwifi.com'
