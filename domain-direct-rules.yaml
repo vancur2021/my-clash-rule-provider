@@ -1,4 +1,5 @@
 payload:
+  - +.cloudflare.com
   - +.ntp.org
   - +.jdcloud-oss.com
   - +.10000.com
